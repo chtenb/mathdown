@@ -1,0 +1,19 @@
+# mathdown-default: the default look, used together with the core:
+#
+#   pandoc -d mathdown -d mathdown-default doc.md -o doc.pdf
+#
+# To change something, add your own settings file after it with -d, or set
+# it in a document's front matter (numbersections, toc, …).
+
+# pdflatex is the fastest engine (about 2x xelatex). Use xelatex or lualatex
+# for OpenType fonts; mathdown works with all three.
+pdf-engine: pdflatex
+include-in-header:
+  - ${USERDATA}/mathdown/default.tex
+variables:
+  documentclass: article
+  classoption: [11pt, a4paper]
+  indent: true
+  colorlinks: true
+  linkcolor: black
+  urlcolor: blue

@@ -1,0 +1,36 @@
+% mathdown core: what the LaTeX produced by filters/mathdown.lua needs.
+% Included by defaults/mathdown.yaml. Change styling in a style file
+% (such as mathdown-default.tex), not here.
+
+\usepackage{mathtools}   % \coloneqq for :=
+\usepackage{amsthm}      % proof, \qedhere, \newtheorem
+
+% Unicode symbols in math (⊆, ⟹, ±, …): unicode-math-input for pdflatex;
+% with xelatex/lualatex pandoc's template already loads unicode-math.
+\usepackage{iftex}
+\ifPDFTeX\usepackage{unicode-math-input}\fi
+
+% The environments the filter writes for **Theorem**, **Definition**, …
+% They are defined at \begin{document}, and only if a style or your own
+% preamble has not defined them already, so those can choose their look,
+% numbering or names.
+\makeatletter
+\newcommand\mathdown@thm[3][mdtheorem]{%
+  \@ifundefined{#2}{\newtheorem{#2}[#1]{#3}}{}}
+\AtBeginDocument{%
+  \@ifundefined{mdtheorem}{\theoremstyle{plain}\newtheorem{mdtheorem}{Theorem}}{}%
+  \theoremstyle{plain}%
+  \mathdown@thm{mdlemma}{Lemma}%
+  \mathdown@thm{mdproposition}{Proposition}%
+  \mathdown@thm{mdcorollary}{Corollary}%
+  \mathdown@thm{mdconjecture}{Conjecture}%
+  \mathdown@thm{mdclaim}{Claim}%
+  \theoremstyle{definition}%
+  \mathdown@thm{mddefinition}{Definition}%
+  \mathdown@thm{mdexample}{Example}%
+  \mathdown@thm{mdaxiom}{Axiom}%
+  \mathdown@thm{mdnotation}{Notation}%
+  \theoremstyle{remark}%
+  \mathdown@thm{mdremark}{Remark}%
+}
+\makeatother

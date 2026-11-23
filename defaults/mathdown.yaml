@@ -1,0 +1,14 @@
+# mathdown core: the reader, the filter and the LaTeX they need.
+#
+#   pandoc -d mathdown -d mathdown-default doc.md -o doc.pdf
+#
+# Combine it with a style (mathdown-default, or your own settings file).
+# Leaves header-includes free for your documents.
+
+# CommonMark, but a blank line after a display, list or quote decides
+# whether the paragraph continues (custom/mathdown.lua)
+from: mathdown.lua
+filters:
+  - mathdown.lua
+include-in-header:
+  - ${USERDATA}/mathdown/core.tex
